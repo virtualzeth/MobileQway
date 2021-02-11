@@ -1,4 +1,4 @@
-import controls.ValidationHandler;
+import handlers.ValidationHandler;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 

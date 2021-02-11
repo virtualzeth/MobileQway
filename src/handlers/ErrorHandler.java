@@ -1,4 +1,4 @@
-package controls;
+package handlers;
 
 import app.Redirect;
 
@@ -18,9 +18,12 @@ public class ErrorHandler {
         System.out.println("Only letters and numbers are allowed.");
         Redirect.loginMenu();
     }
-    public static void NoConnectionError() {
+    public static void noConnectionError() {
         System.out.println("ERROR: NO CONNECTION");
         System.out.println("Could not establish a connection to the server");
         Redirect.loginMenu();
+    }
+    public static void userExistsError() {
+
     }
 }

@@ -1,6 +1,6 @@
 package app;
 
-import controls.ErrorHandler;
+import handlers.ErrorHandler;
 
 import java.util.Scanner;
 

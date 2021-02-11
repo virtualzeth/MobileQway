@@ -1,6 +1,6 @@
 package server;
 
-import controls.ErrorHandler;
+import handlers.ErrorHandler;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,7 +12,7 @@ public class DatabaseHandler {
         try {
             return DriverManager.getConnection(url);
         } catch (SQLException e) {
-            ErrorHandler.NoConnectionError();
+            ErrorHandler.noConnectionError();
             return null;
         }
     }
