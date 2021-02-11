@@ -20,10 +20,11 @@ public class ErrorHandler {
     }
     public static void noConnectionError() {
         System.out.println("ERROR: NO CONNECTION");
-        System.out.println("Could not establish a connection to the server");
+        System.out.println("Could not establish a connection to the server.");
         Redirect.loginMenu();
     }
     public static void userExistsError() {
-
+        System.out.println("ERROR: USER ALREADY EXISTS");
+        Redirect.loginMenu();
     }
 }

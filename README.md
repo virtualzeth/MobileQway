@@ -37,8 +37,7 @@ create table users (
                            constraint table_name_pk
                                primary key,
                        name              TEXT    not null,
-                       registration_date TEXT    not null,
-                       CVR_number        TEXT
+                       registration_date TEXT    not null
 );
 
 create table credentials (
