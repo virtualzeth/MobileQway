@@ -1,24 +1,29 @@
 package app;
 
+import controls.ErrorHandler;
+import server.AccountHandler;
+
 public class Controller {
 
     UserInterface userInterface = new UserInterface();
 
-    public void menu() {
-        switch (userInterface.menu()) {
+    public void loginMenu() {
+        switch (userInterface.loginMenu()) {
             case 0 -> exit();
             case 1 -> login();
             case 2 -> createAccount();
-            default -> System.out.println("ERROR: inputError");
+            default -> ErrorHandler.invalidInputError();
         }
     }
     private void exit() {
         System.exit(0);
     }
-    public void login() {
+    private void login() {
 
     }
-    public void createAccount() {
-
+    private void createAccount() {
+        String phoneNumber = userInterface.askForPhoneNumber().replace(" ", "").replace("-", "").replace(".", "").replace("_", "");
+        String password = userInterface.askForPassword();
+        AccountHandler.createAccountInitialization(phoneNumber, password);
     }
 }
