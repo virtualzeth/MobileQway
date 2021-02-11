@@ -10,6 +10,7 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -23,7 +24,9 @@ public class AccountHandler {
                 try {
                     byte[] hash = PBKDF2Hash(salt, password);
                     AccountReporter.storeNewAccount(conn, phoneNumber, salt, hash, name, getCurrentDate());
-                } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+                    conn.close();
+                    // TODO redirect to dashboard
+                } catch (NoSuchAlgorithmException | InvalidKeySpecException | SQLException e) {
                     e.printStackTrace();
                 }
             } else ErrorHandler.userExistsError();
