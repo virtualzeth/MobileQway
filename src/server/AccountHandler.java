@@ -10,6 +10,8 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.sql.Connection;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class AccountHandler {
     public static void createAccount(String phoneNumber, String password, String name) {
@@ -18,13 +20,12 @@ public class AccountHandler {
         if(conn != null) {
             if(!AccountReporter.userExists(conn, phoneNumber)) {
                 byte[] salt = generateSalt();
-                byte[] hash;
                 try {
-                    hash = PBKDF2Hash(salt, password);
+                    byte[] hash = PBKDF2Hash(salt, password);
+                    AccountReporter.storeNewAccount(conn, phoneNumber, salt, hash, name, getCurrentDate());
                 } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
                     e.printStackTrace();
                 }
-
             } else ErrorHandler.userExistsError();
         } else ErrorHandler.noConnectionError();
     }
@@ -39,5 +40,10 @@ public class AccountHandler {
         KeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, 64536, 128);
         SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         return secretKeyFactory.generateSecret(keySpec).getEncoded();
+    }
+    private static String getCurrentDate() {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        return dateTimeFormatter.format(now);
     }
 }
