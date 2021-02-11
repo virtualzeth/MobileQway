@@ -7,6 +7,11 @@ public class ErrorHandler {
         System.out.println("ERROR: INVALID INPUT");
         System.out.println("Please enter a valid number.");
     }
+    public static void invalidNameError() {
+        System.out.println("ERROR: INVALID NAME");
+        System.out.println("Please only use letters in the english language.");
+        Redirect.loginMenu();
+    }
     public static void invalidPhoneNumberError() {
         System.out.println("ERROR: INVALID PHONE NUMBER");
         System.out.println("Numbers must be 8 characters long");

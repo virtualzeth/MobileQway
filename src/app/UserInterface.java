@@ -20,6 +20,10 @@ public class UserInterface {
             else ErrorHandler.invalidInputError();
         }
     }
+    protected String askForName() {
+        System.out.println("Full name: ");
+        return scanner.nextLine();
+    }
     protected String askForPhoneNumber() {
         System.out.println("Phone number: ");
         return scanner.nextLine();

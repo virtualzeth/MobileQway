@@ -4,6 +4,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ValidationHandler {
+    public static boolean validateName(String name) {
+        Pattern pattern = Pattern.compile("[a-zA-Z ]+");
+        Matcher matcher = pattern.matcher(name);
+        return matcher.matches();
+    }
     public static boolean validatePhoneNumber(String phoneNumber) {
         Pattern pattern = Pattern.compile("^\\d{8}$");
         Matcher matcher = pattern.matcher(phoneNumber);

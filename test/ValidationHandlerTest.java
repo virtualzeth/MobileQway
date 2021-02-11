@@ -4,6 +4,20 @@ import org.junit.jupiter.api.Assertions;
 
 public class ValidationHandlerTest {
     @Test
+    public void validNameMatch() {
+        String[] validNameArray = new String[] {"Anders Anderson", "Ib", "Bob Jaeger", "Michael"};
+        for (String s : validNameArray) {
+            Assertions.assertTrue(ValidationHandler.validateName(s));
+        }
+    }
+    @Test
+    public void invalidNameMatch() {
+        String[] invalidNameArray = new String[] {"1236", "(/&¤#)", "Ib1234 S(/&¤#)", "Bob_Jaeger"};
+        for (String s : invalidNameArray) {
+            Assertions.assertFalse(ValidationHandler.validateName(s));
+        }
+    }
+    @Test
     public void validPhoneNumbersMatch() {
         String[] validNumbersArray = new String[] {"11001100", "99999999", "00000000"};
         for (String s : validNumbersArray) {

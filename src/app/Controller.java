@@ -1,6 +1,7 @@
 package app;
 
 import handlers.ErrorHandler;
+import handlers.ValidationHandler;
 import server.AccountHandler;
 
 public class Controller {
@@ -22,8 +23,11 @@ public class Controller {
 
     }
     private void createAccount() {
-        String phoneNumber = userInterface.askForPhoneNumber().replace(" ", "").replace("-", "").replace(".", "").replace("_", "");
-        String password = userInterface.askForPassword();
-        AccountHandler.createAccountInitialization(phoneNumber, password);
+        String name = userInterface.askForName();
+        if(ValidationHandler.validateName(name)) {
+            String phoneNumber = userInterface.askForPhoneNumber().replace(" ", "").replace("-", "").replace(".", "").replace("_", "");
+            String password = userInterface.askForPassword();
+            AccountHandler.createAccountInitialization(phoneNumber, password);
+        } else ErrorHandler.invalidNameError();
     }
 }
