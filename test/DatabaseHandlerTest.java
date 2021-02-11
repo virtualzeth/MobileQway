@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
-import persistance.DatabaseHandler;
+import server.DatabaseHandler;
 
 import java.sql.Connection;
 import java.sql.SQLException;
