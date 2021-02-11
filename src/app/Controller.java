@@ -5,7 +5,6 @@ import handlers.ValidationHandler;
 import server.AccountHandler;
 
 public class Controller {
-
     UserInterface userInterface = new UserInterface();
 
     public void loginMenu() {
@@ -24,10 +23,17 @@ public class Controller {
     }
     private void createAccount() {
         String name = userInterface.askForName();
+        String phoneNumber = userInterface.askForPhoneNumber().replace(" ", "").replace("-", "").replace(".", "").replace("_", "");
+        String password = userInterface.askForPassword();
         if(ValidationHandler.validateName(name)) {
-            String phoneNumber = userInterface.askForPhoneNumber().replace(" ", "").replace("-", "").replace(".", "").replace("_", "");
-            String password = userInterface.askForPassword();
-            AccountHandler.createAccountInitialization(phoneNumber, password);
+            boolean isValidPhoneNumber = ValidationHandler.validatePhoneNumber(phoneNumber);
+            boolean isValidPassword = ValidationHandler.validatePassword(password);
+
+            if(isValidPhoneNumber) {
+                if(isValidPassword) {
+                    AccountHandler.createAccount(phoneNumber, password, name);
+                } else ErrorHandler.invalidPasswordError();
+            } else ErrorHandler.invalidPhoneNumberError();
         } else ErrorHandler.invalidNameError();
     }
 }
