@@ -1,8 +1,9 @@
-package server;
+package server.account;
 
-import app.Redirect;
+import client.State;
 import handlers.ErrorHandler;
-import server.reporters.AccountReporter;
+import handlers.ValidationHandler;
+import server.DatabaseHandler;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -16,7 +17,30 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class AccountHandler {
-    public static void createAccount(String phoneNumber, String password, String name) {
+    public static boolean loginAccount(String phoneNumber, String password) {
+        Connection conn = DatabaseHandler.connect();
+
+        if(conn != null) {
+            if(AccountReporter.userExists(conn, phoneNumber)) {
+                byte[][] credentials = AccountReporter.getCredentials(conn, phoneNumber);
+
+                if(credentials != null) {
+                    try {
+                        byte[] hash = PBKDF2Hash(credentials[0], phoneNumber);
+
+                        if(ValidationHandler.validateHash(credentials[1], hash)) {
+                            State.setState(phoneNumber);
+                            return true;
+                        } else ErrorHandler.incorrectPasswordError();
+                    } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    }
+                } else ErrorHandler.credentialsRetrievalError();
+            } else ErrorHandler.userExistsError();
+        } else ErrorHandler.noConnectionError();
+        return false;
+    }
+    public static boolean createAccount(String phoneNumber, String password, String name) {
         Connection conn = DatabaseHandler.connect();
 
         if(conn != null) {
@@ -26,12 +50,15 @@ public class AccountHandler {
                     byte[] hash = PBKDF2Hash(salt, password);
                     AccountReporter.storeNewAccount(conn, phoneNumber, salt, hash, name, getCurrentDate());
                     conn.close();
-                    Redirect.dashboard();
+
+                    State.setState(phoneNumber);
+                    return true;
                 } catch (NoSuchAlgorithmException | InvalidKeySpecException | SQLException e) {
                     e.printStackTrace();
                 }
             } else ErrorHandler.userExistsError();
         } else ErrorHandler.noConnectionError();
+        return false;
     }
     private static byte[] generateSalt() {
         SecureRandom secureRandom = new SecureRandom();

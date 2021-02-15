@@ -1,4 +1,4 @@
-package app;
+package client;
 
 import handlers.ErrorHandler;
 
@@ -24,6 +24,7 @@ public class UserInterface {
         }
     }
     protected int dashboard() {
+        System.out.printf("Welcome the dashboard %s!\n\n", State.getName());
         while (true) {
             System.out.println("[1] Transfer funds");
             System.out.println("[2] Add card");
@@ -37,15 +38,15 @@ public class UserInterface {
         }
     }
     protected String askForName() {
-        System.out.println("Full name: ");
+        System.out.print("Full name: ");
         return scanner.nextLine();
     }
     protected String askForPhoneNumber() {
-        System.out.println("Phone number: ");
+        System.out.print("Phone number: ");
         return scanner.nextLine();
     }
     protected String askForPassword() {
-        System.out.println("Password: ");
+        System.out.print("Password: ");
         return scanner.nextLine();
     }
 }

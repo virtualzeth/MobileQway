@@ -1,6 +1,6 @@
 package handlers;
 
-import app.Redirect;
+import client.Redirect;
 
 public class ErrorHandler {
     public static void invalidInputError() {
@@ -19,7 +19,7 @@ public class ErrorHandler {
     }
     public static void invalidPasswordError() {
         System.out.println("ERROR: INVALID PASSWORD");
-        System.out.println("Password must contain at least eight characters, at least one number and both lower and uppercase letters.");
+        System.out.println("Passwords must contain at least eight characters, at least one number and both lower and uppercase letters.");
         System.out.println("Only letters and numbers are allowed.");
         Redirect.loginMenu();
     }

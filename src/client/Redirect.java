@@ -1,4 +1,4 @@
-package app;
+package client;
 
 public class Redirect {
     private static final Controller controller = new Controller();
