@@ -32,7 +32,10 @@ public class Controller {
 
             if(ValidationHandler.validatePassword(password)) {
                 boolean success = AccountHandler.loginAccount(phoneNumber, password);
-                if(success) Redirect.dashboard();
+                if(success) {
+                    //UserState.setState(phoneNumber);
+                    Redirect.dashboard();
+                }
 
             } else ErrorHandler.invalidPasswordError();
         } else ErrorHandler.invalidPhoneNumberError();
@@ -47,7 +50,10 @@ public class Controller {
 
                 if(ValidationHandler.validatePassword(password)) {
                     boolean success = AccountHandler.createAccount(phoneNumber, password, name);
-                    if(success) Redirect.dashboard();
+                    if(success) {
+                        //UserState.setState(phoneNumber);
+                        Redirect.dashboard();
+                    }
 
                 } else ErrorHandler.invalidPasswordError();
             } else ErrorHandler.invalidPhoneNumberError();

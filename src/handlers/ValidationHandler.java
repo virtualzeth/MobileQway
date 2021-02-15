@@ -24,4 +24,11 @@ public class ValidationHandler {
         Matcher matcher = pattern.matcher(input);
         return matcher.matches();
     }
+    public static boolean validateHash(byte[] hash1, byte[] hash2) {
+        if(hash1.length != hash2.length) return false;
+        for (int i = 0; i < hash1.length; i++) {
+            if(hash1[i] != hash2[i]) return false;
+        }
+        return true;
+    }
 }

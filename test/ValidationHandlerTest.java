@@ -53,4 +53,17 @@ public class ValidationHandlerTest {
             Assertions.assertFalse(ValidationHandler.validateNumber99(s));
         }
     }
+    @Test
+    public void validHashMatch() {
+        byte[] hash = new byte[]{72,85,87,24,86,-73,-107};
+        Assertions.assertTrue(ValidationHandler.validateHash(hash, hash));
+    }
+    @Test
+    public void invalidHashMatch() {
+        byte[] hash1 = new byte[]{72,85,87,24,86,-73,-107};
+        byte[] hash2 = new byte[]{-107,85,87};
+        byte[] hash3 = new byte[]{-107,85,-73,86,24,87,72};
+        Assertions.assertFalse(ValidationHandler.validateHash(hash1, hash2));
+        Assertions.assertFalse(ValidationHandler.validateHash(hash1, hash3));
+    }
 }

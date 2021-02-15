@@ -24,7 +24,7 @@ public class UserInterface {
         }
     }
     protected int dashboard() {
-        System.out.printf("Welcome the dashboard %s!\n\n", State.getName());
+        System.out.printf("Welcome the dashboard %s!\n\n", UserState.getName());
         while (true) {
             System.out.println("[1] Transfer funds");
             System.out.println("[2] Add card");

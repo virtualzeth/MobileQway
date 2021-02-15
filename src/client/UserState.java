@@ -1,8 +1,8 @@
 package client;
 
-public class State {
+public class UserState {
     private static final String undefined = "UNDEFINED";
-    private static String name = undefined;
+    private static String name = undefined, phoneNumber = undefined;
 
     public static String getName() {
         return name;

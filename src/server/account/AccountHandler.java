@@ -1,6 +1,5 @@
 package server.account;
 
-import client.State;
 import handlers.ErrorHandler;
 import handlers.ValidationHandler;
 import server.DatabaseHandler;
@@ -29,8 +28,8 @@ public class AccountHandler {
                         byte[] hash = PBKDF2Hash(credentials[0], phoneNumber);
 
                         if(ValidationHandler.validateHash(credentials[1], hash)) {
-                            State.setState(phoneNumber);
                             return true;
+
                         } else ErrorHandler.passwordMatchError();
                     } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
                         e.printStackTrace();
@@ -50,9 +49,8 @@ public class AccountHandler {
                     byte[] hash = PBKDF2Hash(salt, password);
                     AccountReporter.storeNewAccount(conn, phoneNumber, salt, hash, name, getCurrentDate());
                     conn.close();
-
-                    State.setState(phoneNumber);
                     return true;
+
                 } catch (NoSuchAlgorithmException | InvalidKeySpecException | SQLException e) {
                     e.printStackTrace();
                 }
