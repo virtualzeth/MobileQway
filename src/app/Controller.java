@@ -15,6 +15,13 @@ public class Controller {
             default -> ErrorHandler.invalidInputError();
         }
     }
+    public void dashboard() {
+        // TODO
+        switch (userInterface.dashboard()) {
+            case 0 -> exit();
+            default -> ErrorHandler.invalidInputError();
+        }
+    }
     private void exit() {
         System.exit(0);
     }

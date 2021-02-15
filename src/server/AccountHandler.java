@@ -1,5 +1,6 @@
 package server;
 
+import app.Redirect;
 import handlers.ErrorHandler;
 import server.reporters.AccountReporter;
 
@@ -25,7 +26,7 @@ public class AccountHandler {
                     byte[] hash = PBKDF2Hash(salt, password);
                     AccountReporter.storeNewAccount(conn, phoneNumber, salt, hash, name, getCurrentDate());
                     conn.close();
-                    // TODO redirect to dashboard
+                    Redirect.dashboard();
                 } catch (NoSuchAlgorithmException | InvalidKeySpecException | SQLException e) {
                     e.printStackTrace();
                 }

@@ -22,7 +22,8 @@ create table addresses (
 );
 
 create table transactions (
-    phone_number TEXT not null constraint transactions_pk primary key,
+    id INTEGER not null constraint transactions_pk primary key autoincrement,
+    phone_number TEXT not null,
     first_user_id  INTEGER not null,
     second_user_id INTEGER not null,
     amount         REAL    not null

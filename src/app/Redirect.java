@@ -7,4 +7,8 @@ public class Redirect {
         System.out.print("\n");
         controller.loginMenu();
     }
+    public static void dashboard() {
+        System.out.print("\n");
+        controller.dashboard();
+    }
 }

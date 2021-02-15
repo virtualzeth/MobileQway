@@ -19,4 +19,9 @@ public class ValidationHandler {
         Matcher matcher = pattern.matcher(password);
         return matcher.matches();
     }
+    public static boolean validateNumber99(String input) {
+        Pattern pattern = Pattern.compile("^\\d{1,2}$");
+        Matcher matcher = pattern.matcher(input);
+        return matcher.matches();
+    }
 }

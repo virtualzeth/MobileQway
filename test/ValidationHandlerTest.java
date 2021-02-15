@@ -39,4 +39,18 @@ public class ValidationHandlerTest {
             Assertions.assertFalse(ValidationHandler.validatePassword(s));
         }
     }
+    @Test
+    public void validNumberMatch() {
+        String[] validNumbersArray = new String[] {"99", "0"};
+        for (String s : validNumbersArray) {
+            Assertions.assertTrue(ValidationHandler.validateNumber99(s));
+        }
+    }
+    @Test
+    public void invalidNumberMatch() {
+        String[] invalidNumbersArray = new String[] {"-1", "100", "qwe", "=!)=/(&", "1qwe1"};
+        for (String s : invalidNumbersArray) {
+            Assertions.assertFalse(ValidationHandler.validateNumber99(s));
+        }
+    }
 }
