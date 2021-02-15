@@ -31,7 +31,7 @@ public class AccountHandler {
                         if(ValidationHandler.validateHash(credentials[1], hash)) {
                             State.setState(phoneNumber);
                             return true;
-                        } else ErrorHandler.incorrectPasswordError();
+                        } else ErrorHandler.passwordMatchError();
                     } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
                         e.printStackTrace();
                     }

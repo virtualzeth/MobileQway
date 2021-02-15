@@ -23,6 +23,11 @@ public class ErrorHandler {
         System.out.println("Only letters and numbers are allowed.");
         Redirect.loginMenu();
     }
+    public static void passwordMatchError() {
+        System.out.println("ERROR: INCORRECT PASSWORD");
+        System.out.println("The password you have entered does not match with this user's password.");
+        Redirect.loginMenu();
+    }
     public static void noConnectionError() {
         System.out.println("ERROR: NO CONNECTION");
         System.out.println("Could not establish a connection to the server.");
@@ -30,6 +35,11 @@ public class ErrorHandler {
     }
     public static void userExistsError() {
         System.out.println("ERROR: USER ALREADY EXISTS");
+        Redirect.loginMenu();
+    }
+    public static void credentialsRetrievalError() {
+        System.out.println("ERROR: FAILED CREDENTIALS RETRIEVAL");
+        System.out.println("Could not find credentials.");
         Redirect.loginMenu();
     }
 }
