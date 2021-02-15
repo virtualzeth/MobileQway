@@ -42,4 +42,10 @@ public class ErrorHandler {
         System.out.println("Could not find credentials.");
         Redirect.loginMenu();
     }
+
+    public static void stateRetrievalError() {
+        System.out.println("ERROR: FAILED USER RETRIEVAL");
+        System.out.println("Could not find the user's information");
+        Redirect.loginMenu();
+    }
 }

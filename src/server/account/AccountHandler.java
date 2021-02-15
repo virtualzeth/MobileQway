@@ -14,8 +14,18 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 public class AccountHandler {
+    public static String[] getUserState(String phoneNumber) {
+        Connection conn = DatabaseHandler.connect();
+        if(conn != null) {
+            String[] userTable = AccountReporter.getUserStateFromUsers(conn, phoneNumber);
+            if(userTable != null) return userTable;
+            else ErrorHandler.stateRetrievalError();
+        } else ErrorHandler.noConnectionError();
+        return null;
+    }
     public static boolean loginAccount(String phoneNumber, String password) {
         Connection conn = DatabaseHandler.connect();
 
@@ -25,13 +35,14 @@ public class AccountHandler {
 
                 if(credentials != null) {
                     try {
-                        byte[] hash = PBKDF2Hash(credentials[0], phoneNumber);
+                        byte[] hash = PBKDF2Hash(credentials[0], password);
 
                         if(ValidationHandler.validateHash(credentials[1], hash)) {
+                            conn.close();
                             return true;
 
                         } else ErrorHandler.passwordMatchError();
-                    } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+                    } catch (InvalidKeySpecException | NoSuchAlgorithmException | SQLException e) {
                         e.printStackTrace();
                     }
                 } else ErrorHandler.credentialsRetrievalError();

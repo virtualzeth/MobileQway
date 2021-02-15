@@ -33,7 +33,7 @@ public class Controller {
             if(ValidationHandler.validatePassword(password)) {
                 boolean success = AccountHandler.loginAccount(phoneNumber, password);
                 if(success) {
-                    //UserState.setState(phoneNumber);
+                    UserState.setState(phoneNumber);
                     Redirect.dashboard();
                 }
 
@@ -51,7 +51,7 @@ public class Controller {
                 if(ValidationHandler.validatePassword(password)) {
                     boolean success = AccountHandler.createAccount(phoneNumber, password, name);
                     if(success) {
-                        //UserState.setState(phoneNumber);
+                        UserState.setState(phoneNumber);
                         Redirect.dashboard();
                     }
 

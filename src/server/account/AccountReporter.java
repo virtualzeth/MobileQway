@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 public class AccountReporter {
     private static final String codeSplitter = "&#&";
@@ -30,6 +31,19 @@ public class AccountReporter {
                 byte[] hash = translateEncoding(resultSet.getString(3));
                 return new byte[][]{salt, hash};
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    protected static String[] getUserStateFromUsers(Connection conn, String phoneNumber) {
+        String sql = "SELECT * FROM users WHERE phone_number=?";
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, phoneNumber);
+            ResultSet resultSet = stmt.executeQuery();
+            if(resultSet.next()) return new String[]{resultSet.getString("phone_number"),
+                    resultSet.getString("name"), resultSet.getString("registration_date")};
         } catch (SQLException e) {
             e.printStackTrace();
         }
