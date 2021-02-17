@@ -18,4 +18,12 @@ public class DashboardView extends View {
             else ErrorHandler.invalidInputError();
         }
     }
+    public String askForAmount() {
+        System.out.print("Amount: ");
+        return scanner.nextLine();
+    }
+    public String askForTarget() {
+        System.out.print("To (phone number): ");
+        return scanner.nextLine();
+    }
 }

@@ -14,7 +14,7 @@ public class ErrorHandler {
     }
     public static void invalidPhoneNumberError() {
         System.out.println("ERROR: INVALID PHONE NUMBER");
-        System.out.println("Numbers must be 8 characters long");
+        System.out.println("Numbers must be 8 characters long.");
         Redirect.loginMenu();
     }
     public static void invalidPasswordError() {
@@ -48,7 +48,12 @@ public class ErrorHandler {
     }
     public static void stateRetrievalError() {
         System.out.println("ERROR: FAILED USER RETRIEVAL");
-        System.out.println("Could not find the user's information");
+        System.out.println("Could not find the user's information.");
+        Redirect.loginMenu();
+    }
+    public static void negativeNumberError() {
+        System.out.println("ERROR: NEGATIVE NUMBER");
+        System.out.println("Please enter a positive number.");
         Redirect.loginMenu();
     }
 }

@@ -1,9 +1,6 @@
 package client.views;
 
-import client.UserState;
 import handlers.ErrorHandler;
-
-import java.util.Scanner;
 
 public class LoginView extends View {
 
