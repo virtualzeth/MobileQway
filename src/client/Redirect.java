@@ -1,9 +1,11 @@
 package client;
 
-import client.controllers.loginController;
+import client.controllers.DashboardController;
+import client.controllers.LoginController;
 
 public class Redirect {
-    private static final loginController LOGIN_CONTROLLER = new loginController();
+    private static final LoginController LOGIN_CONTROLLER = new LoginController();
+    private static final DashboardController DASHBOARD_CONTROLLER = new DashboardController();
 
     public static void loginMenu() {
         System.out.print("\n");
@@ -11,6 +13,6 @@ public class Redirect {
     }
     public static void dashboard() {
         System.out.print("\n");
-        LOGIN_CONTROLLER.dashboard();
+        DASHBOARD_CONTROLLER.dashboard();
     }
 }

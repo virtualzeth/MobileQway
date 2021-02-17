@@ -2,13 +2,13 @@ package client.controllers;
 
 import client.Redirect;
 import client.UserState;
-import client.views.loginView;
+import client.views.LoginView;
 import handlers.ErrorHandler;
 import handlers.ValidationHandler;
 import server.account.AccountHandler;
 
-public class loginController {
-    client.views.loginView loginView = new loginView();
+public class LoginController extends Controller {
+    LoginView loginView = new LoginView();
 
     public void loginMenu() {
         switch (loginView.loginMenu()) {
@@ -17,16 +17,6 @@ public class loginController {
             case 2 -> createAccount();
             default -> ErrorHandler.invalidInputError();
         }
-    }
-    public void dashboard() {
-        // TODO
-        switch (loginView.dashboard()) {
-            case 0 -> exit();
-            default -> ErrorHandler.invalidInputError();
-        }
-    }
-    private void exit() {
-        System.exit(0);
     }
     private void login() {
         String phoneNumber = loginView.askForPhoneNumber();
