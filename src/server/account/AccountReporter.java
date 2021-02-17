@@ -1,70 +1,75 @@
 package server.account;
 
+import server.DatabaseHandler;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 
 public class AccountReporter {
     private static final String codeSplitter = "&#&";
-    protected static boolean userExists(Connection conn, String phoneNumber) {
+
+    public static boolean userExists(String phoneNumber) {
+        Connection conn = DatabaseHandler.connect();
         String sql = "SELECT * FROM users WHERE phone_number=?";
         try {
+            assert conn != null;
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, phoneNumber);
             ResultSet resultSet = stmt.executeQuery();
+            conn.close();
             return resultSet.next();
         } catch (SQLException e) {
             e.printStackTrace();
             return true;
         }
     }
-    protected static byte[][] getCredentials(Connection conn, String phoneNumber) {
+    protected static byte[][] getCredentials(String phoneNumber) {
+        Connection conn = DatabaseHandler.connect();
         String sql = "SELECT * FROM credentials WHERE phone_number=?";
         try {
+            assert conn != null;
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, phoneNumber);
             ResultSet resultSet = stmt.executeQuery();
             if(resultSet.next()) {
                 byte[] salt = translateEncoding(resultSet.getString(2));
                 byte[] hash = translateEncoding(resultSet.getString(3));
+                conn.close();
                 return new byte[][]{salt, hash};
             }
+            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
-    protected static String[] getUserStateFromUsers(Connection conn, String phoneNumber) {
+    protected static String[] getUserStateFromUsers(String phoneNumber) {
+        Connection conn = DatabaseHandler.connect();
         String sql = "SELECT * FROM users WHERE phone_number=?";
         try {
+            assert conn != null;
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, phoneNumber);
             ResultSet resultSet = stmt.executeQuery();
-            if(resultSet.next()) return new String[]{resultSet.getString("phone_number"),
+            if(resultSet.next()) {
+                String[] result = new String[]{resultSet.getString("phone_number"),
                     resultSet.getString("name"), resultSet.getString("registration_date")};
+                conn.close();
+                return result;
+            }
+            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
-    protected static void storeNewAccount(Connection conn, String phoneNumber, byte[] salt, byte[] hash, String name, String date) {
-        stringIntoTable(conn, "users", phoneNumber, name, date);
-        stringIntoTable(conn, "credentials", phoneNumber, translateEncoding(salt), translateEncoding(hash));
+    protected static void storeNewAccount(String phoneNumber, byte[] salt, byte[] hash, String name, String date) {
+        DatabaseHandler.insertIntoTable("users", phoneNumber, name, date);
+        DatabaseHandler.insertIntoTable("credentials", phoneNumber, translateEncoding(salt), translateEncoding(hash));
     }
-    protected static void stringIntoTable(Connection conn, String table, String string1, String string2, String string3) {
-        String sql = String.format("INSERT INTO %s VALUES (?, ?, ?)", table);
-        try {
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, string1);
-            stmt.setString(2, string2);
-            stmt.setString(3, string3);
-            stmt.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+
     protected static String translateEncoding(byte[] code) {
         StringBuilder stringBuilder = new StringBuilder();
         for (byte b : code) {

@@ -3,6 +3,7 @@ package server.account;
 import handlers.ErrorHandler;
 import handlers.ValidationHandler;
 import server.DatabaseHandler;
+import server.ToolHandler;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -12,15 +13,15 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 
 public class AccountHandler {
     public static String[] getUserState(String phoneNumber) {
         Connection conn = DatabaseHandler.connect();
         if(conn != null) {
-            String[] userTable = AccountReporter.getUserStateFromUsers(conn, phoneNumber);
+            try {
+                conn.close();
+            } catch (SQLException ignored) {}
+            String[] userTable = AccountReporter.getUserStateFromUsers(phoneNumber);
             if(userTable != null) return userTable;
             else ErrorHandler.stateRetrievalError();
         } else ErrorHandler.noConnectionError();
@@ -30,19 +31,21 @@ public class AccountHandler {
         Connection conn = DatabaseHandler.connect();
 
         if(conn != null) {
-            if(AccountReporter.userExists(conn, phoneNumber)) {
-                byte[][] credentials = AccountReporter.getCredentials(conn, phoneNumber);
+            try {
+                conn.close();
+            } catch (SQLException ignored) {}
+            if(AccountReporter.userExists(phoneNumber)) {
+                byte[][] credentials = AccountReporter.getCredentials(phoneNumber);
 
                 if(credentials != null) {
                     try {
                         byte[] hash = PBKDF2Hash(credentials[0], password);
 
                         if(ValidationHandler.validateHash(credentials[1], hash)) {
-                            conn.close();
                             return true;
 
                         } else ErrorHandler.passwordMatchError();
-                    } catch (InvalidKeySpecException | NoSuchAlgorithmException | SQLException e) {
+                    } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
                         e.printStackTrace();
                     }
                 } else ErrorHandler.credentialsRetrievalError();
@@ -54,11 +57,14 @@ public class AccountHandler {
         Connection conn = DatabaseHandler.connect();
 
         if(conn != null) {
-            if(!AccountReporter.userExists(conn, phoneNumber)) {
+            try {
+                conn.close();
+            } catch (SQLException ignored) {}
+            if(!AccountReporter.userExists(phoneNumber)) {
                 byte[] salt = generateSalt();
                 try {
                     byte[] hash = PBKDF2Hash(salt, password);
-                    AccountReporter.storeNewAccount(conn, phoneNumber, salt, hash, name, getCurrentDate());
+                    AccountReporter.storeNewAccount(phoneNumber, salt, hash, name, ToolHandler.getCurrentDate());
                     conn.close();
                     return true;
 
@@ -80,10 +86,5 @@ public class AccountHandler {
         KeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, 64536, 128);
         SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         return secretKeyFactory.generateSecret(keySpec).getEncoded();
-    }
-    private static String getCurrentDate() {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        return dateTimeFormatter.format(now);
     }
 }

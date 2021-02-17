@@ -27,11 +27,12 @@ public class LoginController extends Controller {
                 boolean success = AccountHandler.loginAccount(phoneNumber, password);
                 if(success) {
                     UserState.setState(phoneNumber);
+                    System.out.printf("Welcome the dashboard %s!\n\n", UserState.getName());
                     Redirect.dashboard();
                 }
 
             } else ErrorHandler.invalidPasswordError();
-        } else ErrorHandler.invalidPhoneNumberError();
+        } else ErrorHandler.invalidPhoneNumberError("loginMenu");
     }
     private void createAccount() {
         String name = loginView.askForName();
@@ -49,7 +50,7 @@ public class LoginController extends Controller {
                     }
 
                 } else ErrorHandler.invalidPasswordError();
-            } else ErrorHandler.invalidPhoneNumberError();
+            } else ErrorHandler.invalidPhoneNumberError("loginMenu");
         } else ErrorHandler.invalidNameError();
     }
 }

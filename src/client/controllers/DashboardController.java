@@ -1,9 +1,11 @@
 package client.controllers;
 
+import client.Redirect;
 import client.views.DashboardView;
 import handlers.ErrorHandler;
 import handlers.Messages;
 import handlers.ValidationHandler;
+import server.account.AccountHandler;
 import server.transfer.TransferHandler;
 
 public class DashboardController extends Controller {
@@ -26,10 +28,13 @@ public class DashboardController extends Controller {
 
             if(ValidationHandler.validateNumber(amount)) {
                 if(ValidationHandler.validatePositiveNumber(amount)) {
-                    boolean success = TransferHandler.transferFunds(amount);
-                    if(success) Messages.transferSuccess(amount, target);
+                    boolean success = TransferHandler.transferFunds(Double.parseDouble(amount), target);
+                    if(success) {
+                        Messages.transferSuccess(amount, target);
+                        Redirect.dashboard();
+                    }
                 } else ErrorHandler.negativeNumberError();
             } else ErrorHandler.invalidInputError();
-        } else ErrorHandler.invalidPhoneNumberError();
+        } else ErrorHandler.invalidPhoneNumberError("dashboard");
     }
 }

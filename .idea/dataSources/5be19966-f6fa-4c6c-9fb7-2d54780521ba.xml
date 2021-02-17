@@ -1446,35 +1446,35 @@
     <column id="518" parent="174" name="seq">
       <Position>2</Position>
     </column>
-    <column id="519" parent="175" name="id">
+    <column id="519" parent="175" name="datetime">
       <Position>1</Position>
-      <DataType>INTEGER|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>null</SequenceIdentity>
+      <DataType>TEXT|0s</DataType>
     </column>
-    <column id="520" parent="175" name="phone_number">
+    <column id="520" parent="175" name="from_phone">
       <Position>2</Position>
       <DataType>TEXT|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="521" parent="175" name="first_user_id">
+    <column id="521" parent="175" name="to_phone">
       <Position>3</Position>
-      <DataType>INTEGER|0s</DataType>
+      <DataType>TEXT|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="522" parent="175" name="second_user_id">
+    <column id="522" parent="175" name="amount">
       <Position>4</Position>
-      <DataType>INTEGER|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="523" parent="175" name="amount">
-      <Position>5</Position>
       <DataType>REAL|0s</DataType>
       <NotNull>1</NotNull>
     </column>
+    <index id="523" parent="175" name="sqlite_autoindex_transactions_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>datetime</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
     <key id="524" parent="175" name="transactions_pk">
-      <ColNames>id</ColNames>
+      <ColNames>datetime</ColNames>
       <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_transactions_1</UnderlyingIndexName>
     </key>
     <column id="525" parent="176" name="phone_number">
       <Position>1</Position>

@@ -3,6 +3,12 @@ package handlers;
 import client.Redirect;
 
 public class ErrorHandler {
+    private static void redirect(String target) {
+        switch (target) {
+            case "loginMenu" -> Redirect.loginMenu();
+            case "dashboard" -> Redirect.dashboard();
+        }
+    }
     public static void invalidInputError() {
         System.out.println("ERROR: INVALID INPUT");
         System.out.println("Please enter a valid number.");
@@ -12,10 +18,10 @@ public class ErrorHandler {
         System.out.println("Please only use letters in the english language.");
         Redirect.loginMenu();
     }
-    public static void invalidPhoneNumberError() {
+    public static void invalidPhoneNumberError(String target) {
         System.out.println("ERROR: INVALID PHONE NUMBER");
         System.out.println("Numbers must be 8 characters long.");
-        Redirect.loginMenu();
+        redirect(target);
     }
     public static void invalidPasswordError() {
         System.out.println("ERROR: INVALID PASSWORD");
