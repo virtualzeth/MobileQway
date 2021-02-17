@@ -1,10 +1,11 @@
-package client;
+package client.views;
 
+import client.UserState;
 import handlers.ErrorHandler;
 
 import java.util.Scanner;
 
-public class UserInterface {
+public class loginView {
     Scanner scanner = new Scanner(System.in);
     
     private int input() {
@@ -12,7 +13,7 @@ public class UserInterface {
         String input = scanner.nextLine();
         return handlers.ValidationHandler.validateNumber99(input) ? Integer.parseInt(input) : -1;
     }
-    protected int loginMenu() {
+    public int loginMenu() {
         while (true) {
             System.out.println("[1] Login");
             System.out.println("[2] Create Account");
@@ -23,7 +24,7 @@ public class UserInterface {
             else ErrorHandler.invalidInputError();
         }
     }
-    protected int dashboard() {
+    public int dashboard() {
         System.out.printf("Welcome the dashboard %s!\n\n", UserState.getName());
         while (true) {
             System.out.println("[1] Transfer funds");
@@ -37,15 +38,15 @@ public class UserInterface {
             else ErrorHandler.invalidInputError();
         }
     }
-    protected String askForName() {
+    public String askForName() {
         System.out.print("Full name: ");
         return scanner.nextLine();
     }
-    protected String askForPhoneNumber() {
+    public String askForPhoneNumber() {
         System.out.print("Phone number: ");
         return scanner.nextLine();
     }
-    protected String askForPassword() {
+    public String askForPassword() {
         System.out.print("Password: ");
         return scanner.nextLine();
     }

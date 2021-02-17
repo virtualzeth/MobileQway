@@ -37,12 +37,15 @@ public class ErrorHandler {
         System.out.println("ERROR: USER ALREADY EXISTS");
         Redirect.loginMenu();
     }
+    public static void userDoesNotExistError() {
+        System.out.println("ERROR: USER DOES NOT EXIST");
+        Redirect.loginMenu();
+    }
     public static void credentialsRetrievalError() {
         System.out.println("ERROR: FAILED CREDENTIALS RETRIEVAL");
         System.out.println("Could not find credentials.");
         Redirect.loginMenu();
     }
-
     public static void stateRetrievalError() {
         System.out.println("ERROR: FAILED USER RETRIEVAL");
         System.out.println("Could not find the user's information");

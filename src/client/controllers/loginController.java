@@ -1,14 +1,17 @@
-package client;
+package client.controllers;
 
+import client.Redirect;
+import client.UserState;
+import client.views.loginView;
 import handlers.ErrorHandler;
 import handlers.ValidationHandler;
 import server.account.AccountHandler;
 
-public class Controller {
-    UserInterface userInterface = new UserInterface();
+public class loginController {
+    client.views.loginView loginView = new loginView();
 
     public void loginMenu() {
-        switch (userInterface.loginMenu()) {
+        switch (loginView.loginMenu()) {
             case 0 -> exit();
             case 1 -> login();
             case 2 -> createAccount();
@@ -17,7 +20,7 @@ public class Controller {
     }
     public void dashboard() {
         // TODO
-        switch (userInterface.dashboard()) {
+        switch (loginView.dashboard()) {
             case 0 -> exit();
             default -> ErrorHandler.invalidInputError();
         }
@@ -26,9 +29,9 @@ public class Controller {
         System.exit(0);
     }
     private void login() {
-        String phoneNumber = userInterface.askForPhoneNumber();
+        String phoneNumber = loginView.askForPhoneNumber();
         if(ValidationHandler.validatePhoneNumber(phoneNumber)) {
-            String password = userInterface.askForPassword();
+            String password = loginView.askForPassword();
 
             if(ValidationHandler.validatePassword(password)) {
                 boolean success = AccountHandler.loginAccount(phoneNumber, password);
@@ -41,12 +44,12 @@ public class Controller {
         } else ErrorHandler.invalidPhoneNumberError();
     }
     private void createAccount() {
-        String name = userInterface.askForName();
+        String name = loginView.askForName();
         if(ValidationHandler.validateName(name)) {
-            String phoneNumber = userInterface.askForPhoneNumber().replace(" ", "").replace("-", "").replace(".", "").replace("_", "");
+            String phoneNumber = loginView.askForPhoneNumber().replace(" ", "").replace("-", "").replace(".", "").replace("_", "");
 
             if(ValidationHandler.validatePhoneNumber(phoneNumber)) {
-                String password = userInterface.askForPassword();
+                String password = loginView.askForPassword();
 
                 if(ValidationHandler.validatePassword(password)) {
                     boolean success = AccountHandler.createAccount(phoneNumber, password, name);

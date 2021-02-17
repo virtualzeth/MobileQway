@@ -46,7 +46,7 @@ public class AccountHandler {
                         e.printStackTrace();
                     }
                 } else ErrorHandler.credentialsRetrievalError();
-            } else ErrorHandler.userExistsError();
+            } else ErrorHandler.userDoesNotExistError();
         } else ErrorHandler.noConnectionError();
         return false;
     }
