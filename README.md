@@ -3,13 +3,14 @@
 ---
 
 ## Description
-qwe
+This application simulates monetary transfers between users.
 
 ## Installation
-qwe
+Make sure to have the latest [JDK](https://www.oracle.com/java/technologies/javase/jdk15-archive-downloads.html) installed on you device.
 
 ## Usage
-qwe
+![](./assets/story_1.png)
+![](./assets/story_2.png)
 
 ### Query Examples
 Create tables:
@@ -46,12 +47,20 @@ create table cards (
     active         BOOLEAN    not null
 );
 ```
+List users:
+```sqlite
+SELECT * FROM users;
+```
+List transfers:
+```sqlite
+SELECT * FROM transfers;
+```
 
 ## Contributions
-qwe
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## Resources
 [Password regex](https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a)
 
 ## License
-qwe
+[MIT](https://choosealicense.com/licenses/mit/)

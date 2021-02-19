@@ -6,7 +6,7 @@ import server.ToolHandler;
 
 public class TransferReporter {
     protected static boolean storeNewTransfer(Double amount, String target) {
-        return DatabaseHandler.insertIntoTable("transactions", ToolHandler.getCurrentDate(), UserState.getPhoneNumber(), target, amount);
+        return DatabaseHandler.insertIntoTable("transfers", ToolHandler.getCurrentDate(), UserState.getPhoneNumber(), target, amount);
     }
 
 }

@@ -378,7 +378,7 @@
     <table id="174" parent="2" name="sqlite_sequence">
       <System>1</System>
     </table>
-    <table id="175" parent="2" name="transactions"/>
+    <table id="175" parent="2" name="transfers"/>
     <table id="176" parent="2" name="users"/>
     <argument id="177" parent="6">
       <ArgumentDirection>R</ArgumentDirection>
@@ -1465,7 +1465,7 @@
       <DataType>REAL|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="523" parent="175" name="sqlite_autoindex_transactions_1">
+    <index id="523" parent="175" name="sqlite_autoindex_transfers_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>datetime</ColNames>
       <ColumnCollations></ColumnCollations>
@@ -1474,7 +1474,7 @@
     <key id="524" parent="175" name="transactions_pk">
       <ColNames>datetime</ColNames>
       <Primary>1</Primary>
-      <UnderlyingIndexName>sqlite_autoindex_transactions_1</UnderlyingIndexName>
+      <UnderlyingIndexName>sqlite_autoindex_transfers_1</UnderlyingIndexName>
     </key>
     <column id="525" parent="176" name="phone_number">
       <Position>1</Position>

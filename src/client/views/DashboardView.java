@@ -1,6 +1,5 @@
 package client.views;
 
-import client.UserState;
 import handlers.ErrorHandler;
 
 public class DashboardView extends View {
